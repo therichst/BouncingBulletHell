@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://4pqund3nukl7"]
+
+[ext_resource type="Script" uid="uid://bss4mgihbqfdc" path="res://character_body_2d.gd" id="1_wtcfe"]
+[ext_resource type="Texture2D" uid="uid://cnima36j03tra" path="res://Volleyball-character-restyled-32x32px.png" id="2_0e48y"]
+[ext_resource type="Script" uid="uid://cs5bdn7m03xaj" path="res://bullet.gd" id="3_epypp"]
+[ext_resource type="Texture2D" uid="uid://4q335xxs2p" path="res://icon.svg" id="4_0hol4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rqla8"]
+radius = 20.0
+
+[sub_resource type="Curve" id="Curve_rqla8"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0hol4"]
+radius = 35.0
+
+[node name="Node2D" type="Node2D" unique_id=1857797028]
+
+[node name="Main Char" type="CharacterBody2D" parent="." unique_id=1713415055]
+script = ExtResource("1_wtcfe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Main Char" unique_id=835314296]
+scale = Vector2(7, 7)
+shape = SubResource("CircleShape2D_rqla8")
+
+[node name="Sprite2D" type="Sprite2D" parent="Main Char/CollisionShape2D" unique_id=1561834731]
+position = Vector2(-0.3, 2.2)
+scale = Vector2(1.75, 1.75)
+texture = ExtResource("2_0e48y")
+
+[node name="Line2D" type="Line2D" parent="Main Char" unique_id=2077908959]
+width_curve = SubResource("Curve_rqla8")
+default_color = Color(1, 1, 1, 0)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2071889522]
+zoom = Vector2(0.25, 0.25)
+
+[node name="Boss" type="CharacterBody2D" parent="." unique_id=753539384]
+script = ExtResource("3_epypp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boss" unique_id=1260028429]
+shape = SubResource("CircleShape2D_0hol4")
+
+[node name="Sprite2D" type="Sprite2D" parent="Boss" unique_id=1054153546]
+texture = ExtResource("4_0hol4")
