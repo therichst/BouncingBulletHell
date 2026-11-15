@@ -1,83 +1,143 @@
 [gd_scene format=3 uid="uid://4pqund3nukl7"]
 
-[ext_resource type="Script" uid="uid://bss4mgihbqfdc" path="res://character_body_2d.gd" id="1_wtcfe"]
-[ext_resource type="Texture2D" uid="uid://cnima36j03tra" path="res://Volleyball-character-restyled-32x32px.png" id="2_0e48y"]
-[ext_resource type="Script" uid="uid://cs5bdn7m03xaj" path="res://bullet.gd" id="3_epypp"]
-[ext_resource type="Texture2D" uid="uid://4q335xxs2p" path="res://icon.svg" id="4_0hol4"]
+[ext_resource type="Script" uid="uid://bss4mgihbqfdc" path="res://Player.gd" id="1_wtcfe"]
+[ext_resource type="Script" uid="uid://cs5bdn7m03xaj" path="res://Boss.gd" id="3_epypp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rqla8"]
-radius = 20.0
+radius = 25.0
 
-[sub_resource type="Curve" id="Curve_rqla8"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 2
+[sub_resource type="Gradient" id="Gradient_0e48y"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.2908654, 0.62740386, 0.6995192)
+colors = PackedColorArray(0, 0.35174465, 1, 1, 0, 0.6565347, 1, 1, 0, 0.3529412, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fno6u"]
+gradient = SubResource("Gradient_0e48y")
+width = 100
+height = 100
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0hol4"]
-radius = 35.0
+radius = 45.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kdubu"]
-size = Vector2(16.067993, 20)
+[sub_resource type="Gradient" id="Gradient_5iski"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.49278846, 0.9206731, 1)
+colors = PackedColorArray(1, 0, 0.0865736, 1, 1, 0.35880363, 0.4667923, 1, 1, 1, 1, 0)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_q6r6c"]
-size = Vector2(20, 30739.246)
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_epypp"]
+gradient = SubResource("Gradient_5iski")
+width = 100
+height = 100
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="GDScript" id="GDScript_q6r6c"]
+script/source = "extends StaticBody2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0e48y"]
+size = Vector2(2000, 5000)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_epypp"]
+size = Vector2(5000, 2000)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0hol4"]
-size = Vector2(149.0592, 5698.9243)
+size = Vector2(5000, 2000)
 
-[node name="Node2D" type="Node2D" unique_id=1857797028]
+[node name="Node2D" type="Node2D" unique_id=1857797028 groups=["BOSS", "BULLET", "PLAYER", "WALL"]]
 
-[node name="Main Char" type="CharacterBody2D" parent="." unique_id=1713415055]
+[node name="Main Char" type="CharacterBody2D" parent="." unique_id=1713415055 groups=["PLAYER"]]
+scale = Vector2(2, 2)
+collision_layer = 9
+collision_mask = 6
 script = ExtResource("1_wtcfe")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Main Char" unique_id=835314296]
-scale = Vector2(7, 7)
 shape = SubResource("CircleShape2D_rqla8")
 
-[node name="Sprite2D" type="Sprite2D" parent="Main Char/CollisionShape2D" unique_id=1561834731]
-position = Vector2(-0.3, 2.2)
-scale = Vector2(1.75, 1.75)
-texture = ExtResource("2_0e48y")
-
-[node name="Line2D" type="Line2D" parent="Main Char" unique_id=2077908959]
-width_curve = SubResource("Curve_rqla8")
-default_color = Color(1, 1, 1, 0)
+[node name="Sprite2D" type="Sprite2D" parent="Main Char/CollisionShape2D" unique_id=1090879122]
+texture = SubResource("GradientTexture2D_fno6u")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=2071889522]
 process_physics_priority = 1
 scale = Vector2(10, 10)
 zoom = Vector2(0.25, 0.25)
 
-[node name="Boss" type="CharacterBody2D" parent="." unique_id=753539384]
+[node name="Boss" type="CharacterBody2D" parent="." unique_id=753539384 groups=["BOSS"]]
 position = Vector2(300, 0)
+scale = Vector2(2, 2)
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("3_epypp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Boss" unique_id=1260028429]
 shape = SubResource("CircleShape2D_0hol4")
 
-[node name="Sprite2D" type="Sprite2D" parent="Boss" unique_id=1054153546]
-texture = ExtResource("4_0hol4")
+[node name="Sprite2D2" type="Sprite2D" parent="Boss/CollisionShape2D" unique_id=184876061]
+position = Vector2(0, 2)
+scale = Vector2(1, 0.96)
+texture = SubResource("GradientTexture2D_epypp")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=484619125]
-visible = false
-collision_mask = 0
-collision_priority = 999.0
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1423557869 groups=["WALL"]]
+collision_layer = 4
+script = SubResource("GDScript_q6r6c")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D" unique_id=2070081282]
-position = Vector2(-16712.299, -874.00006)
-scale = Vector2(1793.4165, 781277.3)
-shape = SubResource("RectangleShape2D_kdubu")
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D" unique_id=1960402305]
+position = Vector2(-2000, 0)
+shape = SubResource("RectangleShape2D_0e48y")
 
-[node name="CollisionShape2D5" type="CollisionShape2D" parent="StaticBody2D" unique_id=1242327800]
-position = Vector2(16713, -694.00006)
-scale = Vector2(1793.4165, 781277.3)
-shape = SubResource("RectangleShape2D_kdubu")
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D" unique_id=615222106]
+position = Vector2(2000, 0)
+shape = SubResource("RectangleShape2D_0e48y")
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D" unique_id=767200098]
-position = Vector2(49.999996, -4872)
-scale = Vector2(83980.695, 0.23333906)
-shape = SubResource("RectangleShape2D_q6r6c")
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D" unique_id=1840879169]
+position = Vector2(0, 2000)
+shape = SubResource("RectangleShape2D_epypp")
 
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D" unique_id=861229308]
-position = Vector2(-27642, 42705.582)
-scale = Vector2(2208.7256, 14.532421)
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="StaticBody2D" unique_id=736410004]
+position = Vector2(0, -2000)
 shape = SubResource("RectangleShape2D_0hol4")
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D" unique_id=1850888746]
+position = Vector2(0, 2000)
+scale = Vector2(28.319622, 7.814235)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-87.99999, -128.00006, 192.00006, -128.00006, 192.00006, 152.00006, -88.000084, 152.00006)
+uv = PackedVector2Array(40, 0, 72, 0, 72.00001, 23.999998, 39.999992, 23.999998)
+
+[node name="Polygon2D2" type="Polygon2D" parent="StaticBody2D" unique_id=594501697]
+position = Vector2(0, -2000)
+scale = Vector2(38.17448, 6.5776534)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-87.99999, -128.00006, 192.00006, -128.00006, 192.00006, 152.00006, -88.000084, 152.00006)
+uv = PackedVector2Array(40, 0, 72, 0, 72.00001, 23.999998, 39.999992, 23.999998)
+
+[node name="Polygon2D3" type="Polygon2D" parent="StaticBody2D" unique_id=1813129069]
+position = Vector2(2000, 0)
+scale = Vector2(11.368451, 14.411335)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-87.99999, -128.00006, 192.00006, -128.00006, 192.00006, 152.00006, -88.000084, 152.00006)
+uv = PackedVector2Array(40, 0, 72, 0, 72.00001, 23.999998, 39.999992, 23.999998)
+
+[node name="Polygon2D4" type="Polygon2D" parent="StaticBody2D" unique_id=1223546193]
+position = Vector2(-3182.0002, 81)
+scale = Vector2(11.368451, 14.411335)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-87.99999, -128.00006, 192.00006, -128.00006, 192.00006, 152.00006, -88.000084, 152.00006)
+uv = PackedVector2Array(40, 0, 72, 0, 72.00001, 23.999998, 39.999992, 23.999998)

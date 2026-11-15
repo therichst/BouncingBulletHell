@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://ctp0o18g7yp8p"]
+
+[ext_resource type="Script" uid="uid://4wtrgrm37tan" path="res://bullet.gd" id="1_v7oki"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_v8qja"]
+radius = 45.0
+
+[sub_resource type="Gradient" id="Gradient_epypp"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.49278846, 0.9206731, 1)
+colors = PackedColorArray(0.9697896, 1, 0, 1, 0.9489117, 1, 0.71536756, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_t4vbm"]
+gradient = SubResource("Gradient_epypp")
+width = 100
+height = 100
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[node name="bullet" type="CharacterBody2D" unique_id=1372417534 groups=["BULLET"]]
+position = Vector2(-5267.9995, -2478.9998)
+scale = Vector2(0.35, 0.35)
+collision_layer = 8
+collision_mask = 5
+script = ExtResource("1_v7oki")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1136201053]
+shape = SubResource("CircleShape2D_v8qja")
+
+[node name="Sprite2D2" type="Sprite2D" parent="CollisionShape2D" unique_id=576833559]
+position = Vector2(0, 2)
+scale = Vector2(1, 0.96)
+texture = SubResource("GradientTexture2D_t4vbm")
